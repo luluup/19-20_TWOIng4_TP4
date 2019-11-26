@@ -4,6 +4,9 @@ var router = express.Router();
 const _ = require('lodash');
 const axios = require('axios').default;
 
+//Lien documentation POSTMAN
+//https://web.postman.co/collections/9570671-c3db6332-9494-4c66-a199-70fdfec9c598?version=latest&workspace=7000658a-601c-453e-83e0-6f99acc7919d
+
 let mesMovies = [];
 
 
@@ -16,12 +19,13 @@ router.get('/', (req, res) => {
 /* GET un film par son id. */
 router.get('/:id', (req, res) => {
 
-  const { id } = req.params; //on récupère l'id du film
+  const { id } = req.params;
   const monfilm = _.find(mesMovies, ['id', id])
 
   // Get List of film and return JSON
   res.status(200).json({
-    message: 'Film trouvé : ', id
+    message: 'Film trouvé : ',
+    monfilm
   });
 });
 
@@ -57,8 +61,9 @@ router.put('/', (req, res) => {
 
 
 /* UPDATE un film via son id. */
-router.post('/id', (req, res) => {
+router.post('/:id', (req, res) => {
   console.log(req.body.id);
+  console.log(req.body.name);
 
   // Get the :id of the user we want to update from the params of the request
   const { id } = req.params;
@@ -81,7 +86,7 @@ router.delete('/:id', (req, res) => {
   const id = req.params.id;
 
   console.log(req.params);
-  console.log("Lucie la pouce");
+
   // Remove from "DB"
   _.remove(mesMovies, ["id", id]);
 
